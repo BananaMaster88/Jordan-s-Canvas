@@ -1,0 +1,250 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <style>
+      h2 {
+        color:red;
+        font-family:'Times New Roman', Times, serif;
+        top:10%;
+      }
+      #start {
+        height: 150px;
+        width: 300px;
+        color: hotpink;
+        background-color: blue;
+        font-size:40px;
+      }
+      section { 
+        position: absolute;
+        height:100%;
+        width: 100%; 
+         margin-top: -30px; 
+        background-position: center; 
+        background-repeat: no-repeat;
+        top:70%;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>In this website, you will see images from our family for you to draw. When you click start, you will be timed to see how fast and at what quality you can recreate the random image you will be shown. Click save to submit your drawing. Good Luck!</h2>
+    <script>
+    </script>
+    <button  id="start" onclick="style.visibility = 'hidden'; goodL()">--&#62;START&lt;--</button>
+    <section></section>
+    <div id="time"> 
+      <span class="digit" id="hr"> 
+          00</span> 
+      <span class="txt">Hr</span> 
+      <span class="digit" id="min"> 
+          00</span> 
+      <span class="txt">Min</span> 
+      <span class="digit" id="sec"> 
+          00</span> 
+      <span class="txt">Sec</span> 
+      <span class="digit" id="count"> 
+          00</span> 
+  </div> 
+  <div id="buttons"> 
+  <script type="text/javascript">
+                const pics = [ 
+            'url( "https://bananamaster88.github.io/jimage1/jImage1.jpg")', 
+            'url( "https://bananamaster88.github.io/jimage2/jImage2.jpg")', 
+            'url( "https://bananamaster88.github.io/jimage3/jImage3.jpg")', 
+            'url( "https://bananamaster88.github.io/jimage4/jImage4.png")', 
+            'url( "https://bananamaster88.github.io/jimage5/jImage5.jpg")', 
+            'url( "https://bananamaster88.github.io/jimage6/jImage6.jpg")', 
+            'url( "https://bananamaster88.github.io/jimage7/jImage7.jpg")' ,
+            'url("https://uploads.disquscdn.com/images/e281f70f12158b7d0b5f53d018b678266069233d79c6347f4145c1867fc10cb0.png")',
+            'url("https://yt3.ggpht.com/a/AATXAJydIJf9jr0LivPKvh0D4RvasFxXHzhl83o5jw=s900-c-k-c0xffffffff-no-rj-mo")',
+        ]; 
+        const pic = document.querySelector('section'); 
+        function goodL() {
+            var a = Math.floor(Math.random() * pics.length); 
+            var img = pics[a]; 
+            pic.style.backgroundImage = img;
+        }
+    alert(`Welcome, Jordan`)
+let startBtn = document.getElementById('start');
+    startBtn.addEventListener('click', function () {
+    timer = true; 
+    stopWatch();
+  })
+    let hour = 0; 
+let minute = 0; 
+let second = 0; 
+let count = 0; 
+function stopWatch() { 
+    if (timer) { 
+        count++; 
+        if (count == 100) { 
+            second++; 
+            count = 0; 
+        } 
+        if (second == 60) { 
+            minute++; 
+            second = 0; 
+        } 
+        if (minute == 60) { 
+            hour++; 
+            minute = 0; 
+            second = 0; 
+        } 
+        let hrString = hour; 
+        let minString = minute; 
+        let secString = second; 
+        let countString = count; 
+        if (hour < 10) { 
+            hrString = "0" + hrString; 
+        } 
+        if (minute < 10) { 
+            minString = "0" + minString; 
+        } 
+        if (second < 10) { 
+            secString = "0" + secString; 
+        } 
+        if (count < 10) { 
+            countString = "0" + countString; 
+        } 
+        document.getElementById('hr').innerHTML = hrString; 
+        document.getElementById('min').innerHTML = minString; 
+        document.getElementById('sec').innerHTML = secString; 
+        document.getElementById('count').innerHTML = countString; 
+        setTimeout(stopWatch, 10); 
+      }
+    }
+
+    let canvas, ctx, flag = false,
+      prevX = 0,
+      currX = 0,
+      prevY = 0,
+      currY = 0,
+      dot_flag = false;
+
+  let x = "black",
+      y = 2;
+  
+  function init() {
+      canvas = document.getElementById('can');
+      ctx = canvas.getContext("2d");
+      w = canvas.width;
+      h = canvas.height;
+  
+      canvas.addEventListener("mousemove", function (e) {
+          findxy('move', e)
+      }, false);
+      canvas.addEventListener("mousedown", function (e) {
+          findxy('down', e)
+      }, false);
+      canvas.addEventListener("mouseup", function (e) {
+          findxy('up', e)
+      }, false);
+      canvas.addEventListener("mouseout", function (e) {
+          findxy('out', e)
+      }, false);
+  }
+  
+  function color(obj) {
+      switch (obj.id) {
+          case "green":
+              x = "green";
+              break;
+          case "blue":
+              x = "blue";
+              break;
+          case "red":
+              x = "red";
+              break;
+          case "yellow":
+              x = "yellow";
+              break;
+          case "orange":
+              x = "orange";
+              break;
+          case "black":
+              x = "black";
+              break;
+          case "white":
+              x = "white";
+              break;
+      }
+      if (x == "white") y = 14;
+      else y = 2;
+  
+  }
+  
+  function draw() {
+      ctx.beginPath();
+      ctx.moveTo(prevX, prevY);
+      ctx.lineTo(currX, currY);
+      ctx.strokeStyle = x;
+      ctx.lineWidth = y;
+      ctx.stroke();
+      ctx.closePath();
+  }
+  
+  function erase() {
+      let m = confirm("Are you sure you want to clear?");
+      if (m) {
+          ctx.clearRect(0, 0, w, h);
+          document.getElementById("canvasimg").style.display = "none";
+      }
+  }
+  
+  function save() {
+      document.getElementById("canvasimg").style.border = "2px solid";
+      let dataURL = canvas.toDataURL();
+      document.getElementById("canvasimg").src = dataURL;
+      document.getElementById("canvasimg").style.display = "inline";
+      document.getElementById(`compare`);
+    timer = false; 
+};
+  
+  function findxy(res, e) {
+      if (res == 'down') {
+          prevX = currX;
+          prevY = currY;
+          currX = e.clientX - canvas.offsetLeft;
+          currY = e.clientY - canvas.offsetTop;
+  
+          flag = true;
+          dot_flag = true;
+          if (dot_flag) {
+              ctx.beginPath();
+              ctx.fillStyle = x;
+              ctx.fillRect(currX, currY, 2, 2);
+              ctx.closePath();
+              dot_flag = false;
+          }
+      }
+      if (res == 'up' || res == "out") {
+          flag = false;
+      }
+      if (res == 'move') {
+          if (flag) {
+              prevX = currX;
+              prevY = currY;
+              currX = e.clientX - canvas.offsetLeft;
+              currY = e.clientY - canvas.offsetTop;
+              draw();
+          }
+      }
+  }
+  </script>
+  <body onload="init()">
+      <canvas id="can" width="400" height="400" style="position:absolute;top:10%;left:10%;border:2px solid;"></canvas>
+      <div style="position:absolute;top:12%;left:43%;">Choose Color</div>
+      <div style="position:absolute;top:15%;left:45%;width:10px;height:10px;background:green;" id="green" onclick="color(this)"></div>
+      <div style="position:absolute;top:15%;left:46%;width:10px;height:10px;background:blue;" id="blue" onclick="color(this)"></div>
+      <div style="position:absolute;top:15%;left:47%;width:10px;height:10px;background:red;" id="red" onclick="color(this)"></div>
+      <div style="position:absolute;top:17%;left:45%;width:10px;height:10px;background:yellow;" id="yellow" onclick="color(this)"></div>
+      <div style="position:absolute;top:17%;left:46%;width:10px;height:10px;background:orange;" id="orange" onclick="color(this)"></div>
+      <div style="position:absolute;top:17%;left:47%;width:10px;height:10px;background:black;" id="black" onclick="color(this)"></div>
+      <div style="position:absolute;top:20%;left:43%;">Eraser</div>
+      <div style="position:absolute;top:22%;left:45%;width:15px;height:15px;background:white;border:2px solid;" id="white" onclick="color(this)"></div>
+      <img id="canvasimg" style="position:absolute;top:10%;left:52%;" style="display:none;">
+      <input class="haha" type="button" value="save" id="btn" size="30" onclick="save()" style="position:absolute;top:68%;left:10%;">
+      <input type="button" value="clear" id="clr" size="23" onclick="erase()" style="position:absolute;top:68%;left:15%;">
+  </body>
+  <p>Made with lots of love, <br> your step-son, <br> Chase</p>
+  </body>
+  </html>
